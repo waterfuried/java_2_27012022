@@ -90,7 +90,6 @@ public class Main {
             }
 
             // 3) склеить два массива в один
-            Arrays.fill(arr, 0); // для чистоты эксперимента
             System.arraycopy(a1, 0, arr, 0, HALFSIZE);
             System.arraycopy(a2, 0, arr, HALFSIZE, HALFSIZE);
         }

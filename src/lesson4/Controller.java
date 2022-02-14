@@ -27,10 +27,11 @@ public class Controller implements Initializable {
 
     @FXML
     public void sendMsg(ActionEvent actionEvent) {
-        String time = new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
-        if (lastInput == null || !isEmpty(myText.getText())) {
-            chatText.appendText('[' + time + "]: ");
-        }
+        // для нового сообщения в чате указывать время
+        if (lastInput == null || !isEmpty(myText.getText()))
+            chatText.appendText('[' +
+                new java.text.SimpleDateFormat("HH:mm:ss").format(new java.util.Date())
+                + "]: ");
         lastInput = myText.getText();
         chatText.appendText(lastInput + "\n");
         myText.clear();

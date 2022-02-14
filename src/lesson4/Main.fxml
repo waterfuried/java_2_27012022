@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="267.0" prefWidth="600.0" styleClass="common_bg" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lesson4.Controller">
+   <children>
+      <TextArea fx:id="chatText" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="571.0" styleClass="immutable_bg" stylesheets="@css/style.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <TextField fx:id="myText" layoutX="14.0" layoutY="227.0" onAction="#sendMsg" prefHeight="25.0" prefWidth="487.0" styleClass="round_bg" stylesheets="@css/style.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="100.0" />
+      <Button layoutX="510.0" layoutY="227.0" mnemonicParsing="false" onAction="#sendMsg" stylesheets="@css/style.css" text="Отправить" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <styleClass>
+            <String fx:value="round_bg" />
+            <String fx:value="dark-bg_bright-fg" />
+         </styleClass>
+      </Button>
+   </children>
+</AnchorPane>

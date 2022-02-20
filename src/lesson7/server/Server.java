@@ -60,6 +60,7 @@ public class Server {
             if (c.getNickname().equals(receiver)) {
                 c.sendMsg(message);
                 found = true;
+                break;
             }
         }
         if (!receiver.equals(sender.getNickname()))

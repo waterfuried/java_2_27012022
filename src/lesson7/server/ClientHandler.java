@@ -57,8 +57,7 @@ public class ClientHandler {
                         }
                     }
                     //цикл работы
-                    boolean active = true;
-                    while (authenticated && active) {
+                    while (authenticated) {
                         String str = in.readUTF();
                         boolean broadcastMsg = true;
 
@@ -67,19 +66,16 @@ public class ClientHandler {
                             switch (s[0].toLowerCase()) {
                                 case "end":
                                     sendMsg("/end");
-                                    active = false;
+                                    broadcastMsg = false;
                                     break;
                                 case "w":
                                     if (s.length == 3) {
                                         broadcastMsg = false;
                                         server.sendPrivateMsg(this, s[1], s[2]);
                                     }
-                                    break;
-                                case "auth":
-                                    broadcastMsg = false;
                             }
                         }
-                        if (active && broadcastMsg) server.broadcastMsg(this, str);
+                        if (broadcastMsg) server.sendBroadcastMsg(this, str);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -2,27 +2,17 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import java.net.URL?>
 
-<VBox alignment="center" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lesson7.Controller">
-    <stylesheets><URL value="/css/style.css"/></stylesheets>
+<VBox alignment="center" fx:controller="lesson7.Controller"
+      xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
     <HBox fx:id="authPanel">
         <TextField fx:id="loginField" onAction="#authorize" promptText="login" HBox.hgrow="ALWAYS" />
         <PasswordField fx:id="passwordField" onAction="#authorize" promptText="password" HBox.hgrow="ALWAYS" />
-        <Button onAction="#authorize" text="Authorize">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-        </Button>
+        <Button onAction="#authorize" text="Authorize" stylesheets="@css/style.css" />
     </HBox>
     <TextArea fx:id="textArea" editable="false" VBox.vgrow="ALWAYS" />
     <HBox fx:id="msgPanel" managed="false" visible="false">
         <TextField fx:id="textField" onAction="#sendMsg" promptText="input text" HBox.hgrow="ALWAYS" />
-        <Button onAction="#sendMsg" text="send">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-        </Button>
+        <Button onAction="#sendMsg" text="send" stylesheets="@css/style.css" />
     </HBox>
 </VBox>

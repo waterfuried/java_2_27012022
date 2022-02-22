@@ -142,6 +142,15 @@ public class Controller implements Initializable {
     }
 
     public void authorize (ActionEvent actionEvent) {
+        // при попытках входа по нажатию enter установить фокус на незаполненное поле
+        if (loginField.getText().trim().length() == 0) {
+            loginField.requestFocus();
+            return;
+        }
+        if (passwordField.getText().trim().length() == 0) {
+            passwordField.requestFocus();
+            return;
+        }
         if (socket == null || socket.isClosed()) {
             connect();
         }

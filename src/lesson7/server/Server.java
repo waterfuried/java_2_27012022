@@ -55,7 +55,7 @@ public class Server {
         String message = "[ личное сообщение %s %s ]: %s";
         for (ClientHandler c : clients) {
             if (c.getNickname().equals(receiver)) {
-                c.sendMsg(String.format(message, "от", sender.getNickname(), msg)/*message*/);
+                c.sendMsg(String.format(message, "от", sender.getNickname(), msg));
                 if (!receiver.equals(sender.getNickname()))
                     sender.sendMsg(String.format(message, "для", receiver, msg));
                 return;

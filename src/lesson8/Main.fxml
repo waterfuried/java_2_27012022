@@ -28,8 +28,7 @@
     </HBox>
     <HBox VBox.vgrow="ALWAYS">
         <TextArea fx:id="textArea" editable="false" HBox.hgrow="ALWAYS" />
-        <ListView fx:id="clientList" managed="false" minWidth="150"
-                  onMouseReleased="#clientListMouseAction" visible="false" />
+        <ListView fx:id="clientList" managed="false" minWidth="150" visible="false" />
     </HBox>
     <HBox fx:id="msgPanel" managed="false" visible="false">
         <TextField fx:id="textField" onAction="#sendMsg" promptText="input text"

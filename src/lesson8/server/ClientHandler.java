@@ -4,7 +4,9 @@ import lesson8.Prefs;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+
 import java.io.IOException;
+
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
@@ -107,11 +109,8 @@ public class ClientHandler {
                     // прервется и произойдет переход далее - к циклу работы (который не начнется при
                     // отсутствии авторизации) и сокет будет закрыт перед завершением работы потока
                     sendMsg(Prefs.getCommand(Prefs.COM_QUIT));
-                    try {
-                        socket.setSoTimeout(0);
-                    } catch (SocketException e) {
-                        e.printStackTrace();
-                    }
+                    // в любом случае выполнится блок finally с закрытием сокета -
+                    // потому здесь нет смысла сбрасывать таймер таймаута
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 } finally {
@@ -130,6 +129,7 @@ public class ClientHandler {
         }
     }
 
+    // отправка служебного сообщения (извещения) пользователю
     public void sendMsg(String msg) {
         try {
             out.writeUTF(msg);
@@ -148,12 +148,19 @@ public class ClientHandler {
     }
 
     // окончание минуты/секунды в зависимости от числа в винительном(?) падеже
+    // значение имеет последняя цифра числа (или последние две)
     private String getAccusativeEnding(int number) {
-        int lastDigit = number;
-        while (lastDigit > 10) lastDigit %= 10;
+        int log = 1,
+            n = number,
+            lastDigit = number % 10;
+        while (n / 10 >= 10) {
+            n /= 10;
+            log *= 10;
+        }
+        if (log > 1) n = number - n*log;
 
         String res = "";
-        if (number < 10 || number > 20)
+        if (n < 10 || n > 20)
             switch (lastDigit) {
                 case 1: res = "у"; break;
                 case 2: case 3: case 4:  res = "ы";
@@ -164,8 +171,10 @@ public class ClientHandler {
     // предупредить об ограничении времени авторизации
     private void sendAuthorizationWarning() {
         if (Prefs.TIMEOUT > 0) {
-            int mn = Prefs.TIMEOUT / 60, sc = Prefs.TIMEOUT % 60;
             StringBuilder warnMsg = new StringBuilder("Сеанс авторизации будет завершен через ");
+
+            int mn = Prefs.TIMEOUT / 60,
+                sc = Prefs.TIMEOUT % 60;
             if (mn > 0)
                 warnMsg.append(mn).append(" минут")
                        .append(getAccusativeEnding(mn));

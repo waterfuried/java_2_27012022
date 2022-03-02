@@ -10,27 +10,25 @@ import javafx.fxml.Initializable;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
-import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Modality;
 
-import java.net.ConnectException;
-import java.net.Socket;
+import javafx.beans.value.ChangeListener;
+
 import java.net.URL;
+import java.net.Socket;
+import java.net.ConnectException;
 
 import java.io.IOException;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 import java.util.ResourceBundle;
-
-import javafx.beans.value.ChangeListener;
 
 public class Controller implements Initializable {
     @FXML HBox authPanel;
@@ -47,14 +45,14 @@ public class Controller implements Initializable {
     private Socket socket;
     private static final String ADDRESS = "localhost";
 
-    private DataInputStream in;
-    private DataOutputStream out;
-
-    private boolean authorized, clientRunning;
+    private boolean authorized;
+    private String nickname;
 
     public boolean serverRunning;
+    private boolean clientRunning;
 
-    private String nickname;
+    private DataInputStream in;
+    private DataOutputStream out;
 
     private Stage stage, regStage;
 
@@ -80,7 +78,7 @@ public class Controller implements Initializable {
         setTitle(nickname);
     }
 
-    boolean incompleteUserData() {
+    private boolean incompleteUserData() {
         return loginField.getText().trim().length() == 0 || passwordField.getText().trim().length() == 0;
     }
 
@@ -138,6 +136,7 @@ public class Controller implements Initializable {
         serverRunning = true;
         try {
             socket = new Socket(ADDRESS, Prefs.PORT);
+
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
 
@@ -258,13 +257,6 @@ public class Controller implements Initializable {
         }
     }
 
-    // отправка личных сообщений перенесена в контекстное меню списка пользователей
-    public void clientListMouseAction(MouseEvent mouseEvent) {
-        /*textField.setText(String.format(
-                Prefs.getCommand(Prefs.COM_PRIVATE_MSG, "%s "),
-                clientList.getSelectionModel().getSelectedItem()));*/
-    }
-
     private void createRegStage() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("regForm.fxml"));
@@ -273,7 +265,7 @@ public class Controller implements Initializable {
             regStage = new Stage();
 
             regStage.setTitle("Chatty registration");
-            regStage.setScene(new Scene(root, 600, 500));
+            regStage.setScene(new Scene(root));
 
             regController = fxmlLoader.getController();
             regController.setController(this);

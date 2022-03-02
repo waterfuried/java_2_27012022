@@ -20,10 +20,12 @@ public class Prefs {
     public static final String SRV_REG_FAULT = "reg_fault";
 
     public static String getCommand (String cmdName, String ... args) {
+        if (args == null || args.length == 0)
+            return COM_ID + cmdName;
+
         StringBuilder sb = new StringBuilder(COM_ID + cmdName);
-        if (args != null && args.length > 0)
-            for (String s : args)
-                sb.append(" ").append(s);
+        for (String s : args)
+            sb.append(" ").append(s);
         return sb.toString();
     }
 }
